@@ -10,14 +10,34 @@ const Main = () => {
       const req = await axios.get(
         'http://www.omdbapi.com/?s=sonic&apikey=69f5cb07',
       )
-      setLoad(req.data)
+      setLoad(req.data.Search)
     }
 
     fetchData()
   }, [])
 
-  const call = () => {
-    console.log(load)
+  const Movies = (props) => {
+    // console.log(props)
+    return (
+      <Flex
+        backgroundImage={`url(${props.img})`}
+        backgroundColor="#4a5147aa"
+        backgroundBlendMode="multiply"
+        color="white"
+        w="290px"
+        h="290px"
+        justify="center"
+        alignItems="center"
+        borderRadius="12px"
+        overflow="none"
+        mx="6px"
+        mt="7px"
+      >
+        <Text fontSize="24px" pb="4px">
+          {props.title}
+        </Text>
+      </Flex>
+    )
   }
 
   return (
@@ -37,77 +57,9 @@ const Main = () => {
               Movie Category Name
             </Text>
             <Flex wrap="wrap">
-              <Flex
-                bg="black"
-                color="white"
-                w="300px"
-                h="300px"
-                justify="center"
-                alignItems="center"
-                borderRadius="12px"
-                overflow="none"
-                mx="6px"
-                mt="7px"
-              >
-                <Text fontSize="24px" pb="4px">
-                  Movie Name
-                </Text>
-              </Flex>
-              <Flex
-                bg="black"
-                color="white"
-                w="300px"
-                h="300px"
-                justify="center"
-                alignItems="center"
-                borderRadius="12px"
-                overflow="none"
-                mx="6px"
-                mt="7px"
-              >
-                <Text fontSize="24px" pb="4px">
-                  Movie Name
-                </Text>
-              </Flex>
-              <Flex
-                bg="black"
-                color="white"
-                w="300px"
-                h="300px"
-                justify="center"
-                alignItems="center"
-                borderRadius="12px"
-                overflow="none"
-                mx="6px"
-                mt="7px"
-              >
-                <Text fontSize="24px" pb="4px">
-                  Movie Name
-                </Text>
-              </Flex>
-            </Flex>
-          </Box>
-          <Box pb="48px">
-            <Text fontSize="24px" pb="4px">
-              Movie Category Name
-            </Text>
-            <Flex wrap="wrap">
-              <Flex
-                bg="black"
-                color="white"
-                w="300px"
-                h="300px"
-                justify="center"
-                alignItems="center"
-                borderRadius="12px"
-                overflow="none"
-                mx="6px"
-                mt="7px"
-              >
-                <Text fontSize="24px" pb="4px">
-                  Movie Name
-                </Text>
-              </Flex>
+              {load.map((p, i) => {
+                return <Movies img={p.Poster} title={p.Title} key={i} />
+              })}
             </Flex>
           </Box>
         </Stack>
