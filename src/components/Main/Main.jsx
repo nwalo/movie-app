@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { Box, Flex, Text, Input, HStack, Stack } from '@chakra-ui/react'
 import axios from 'axios'
+import cors from 'cors'
 
 const Main = () => {
   const [load, setLoad] = useState([])
@@ -9,6 +10,7 @@ const Main = () => {
     async function fetchData() {
       const req = await axios.get(
         'http://www.omdbapi.com/?s=sonic&apikey=69f5cb07',
+        cors(),
       )
       setLoad(req.data.Search)
     }
