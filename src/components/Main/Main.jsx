@@ -9,7 +9,7 @@ const Main = () => {
   useEffect(() => {
     async function fetchData() {
       const req = await axios.get(
-        'http://www.omdbapi.com/?s=sonic&apikey=69f5cb07',
+        'https://www.omdbapi.com/?s=sonic&apikey=69f5cb07',
         cors(),
       )
       setLoad(req.data.Search)
