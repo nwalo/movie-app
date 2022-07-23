@@ -95,7 +95,7 @@ const Main = () => {
         <Stack>
           <Box pb="48px">
             <Text fontSize="24px" pb="4px">
-              Movie Category Name
+              Movie Category: {movieName}
             </Text>
             <Flex wrap="wrap">{loadMovie}</Flex>
           </Box>
