@@ -15,17 +15,19 @@ const Main = () => {
   const [load, setLoad] = useState()
   const [movie, setMovie] = useState('')
   const [movieName, setMovieName] = useState('Sonic')
+  const [error, setError] = useState()
 
   useEffect(() => {
-    async function fetchData() {
-      const req = await axios.get(
-        `https://www.omdbapi.com/?s=${movieName}&apikey=69f5cb07`,
-        cors(),
-      )
-      setLoad(req.data.Search)
-    }
-
-    fetchData()
+    axios
+      .get(`https://www.omdbapi.com/?s=${movieName}&apikey=69f5cb07`, cors())
+      .then((res) => {
+        setLoad(res.data.Search)
+        setError()
+      })
+      .catch((err) => {
+        setError(err.message)
+        console.log(err.message)
+      })
   }, [movieName])
 
   const Movies = (props) => {
@@ -45,7 +47,7 @@ const Main = () => {
         mx="6px"
         mt="7px"
       >
-        <Text fontSize="24px" pb="4px">
+        <Text fontSize="24px" textAlign="center" pb="4px">
           {props.title}
         </Text>
       </Flex>
@@ -54,7 +56,7 @@ const Main = () => {
 
   let loadMovie = (
     <Heading as="h4" fontSize="24px" mt="2em">
-      Unable to load resources, please check your connection ...
+      Unable to load resources, search query is not valid...
     </Heading>
   )
 
@@ -62,6 +64,12 @@ const Main = () => {
     loadMovie = load.map((p, i) => {
       return <Movies img={p.Poster} title={p.Title} key={i} />
     })
+  } else if (error) {
+    loadMovie = (
+      <Heading as="h4" fontSize="24px" mt="2em">
+        {error}
+      </Heading>
+    )
   }
 
   const handleChange = (e) => {
@@ -86,6 +94,7 @@ const Main = () => {
           <Input
             placeholder="Search movie title..."
             type="search"
+            textTransform="capitalize"
             onChange={handleChange}
             value={movie}
           />
@@ -94,7 +103,7 @@ const Main = () => {
       <Box pb="67px">
         <Stack>
           <Box pb="48px">
-            <Text fontSize="24px" pb="4px">
+            <Text fontSize="24px" textTransform="capitalize" pb="4px">
               Movie Category: {movieName}
             </Text>
             <Flex wrap="wrap">{loadMovie}</Flex>
